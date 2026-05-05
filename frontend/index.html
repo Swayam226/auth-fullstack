@@ -39,6 +39,20 @@
       }
       //   localStorage.setItem("token", res.data.token);
     }
+
+    async function getuserInfo() {
+      const res = await fetch("http://localhost:3000/me", {
+        method: "GET",
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      });
+      const data = await res.json();
+      console.log("userinforunning");
+      document.getElementById("userInfo").innerHTML =
+        "username: " + data.username;
+    }
+    getuserInfo();
   </script>
   <body>
     <div>
