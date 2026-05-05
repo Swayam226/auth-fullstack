@@ -42,6 +42,7 @@
       } else {
         localStorage.setItem("token", data.token);
       }
+      renderUI();
       //   localStorage.setItem("token", res.data.token);
     }
 
@@ -61,13 +62,29 @@
           "username: " + data.username;
       }
     }
-    getuserInfo();
+
+    function renderUI() {
+      const token = localStorage.getItem("token");
+      const authsection = document.getElementById("authsection");
+      const usersection = document.getElementById("usersection");
+      if (token) {
+        authsection.classList.add("hidden");
+        usersection.classList.remove("hidden");
+        getuserInfo();
+      } else {
+        usersection.classList.add("hidden");
+        authsection.classList.remove("hidden");
+      }
+    }
 
     async function logout() {
       if (localStorage.getItem("token")) {
         localStorage.removeItem("token");
       }
+      renderUI();
     }
+
+    window.onload = renderUI;
   </script>
   <body>
     <div id="authsection">
