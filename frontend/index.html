@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <script>
+    async function signup() {
+      const username = document.getElementById("signup-username").value;
+      const password = document.getElementById("signup-password").value;
+      const res = await fetch("http://localhost:3000/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await res.json();
+      console.log(data);
+    }
+  </script>
+  <body>
+    <div>
+      Signup:
+      <input id="signup-username" type="text" placeholder="username" />
+      <input id="signup-password" type="password" placeholder="password" />
+      <button onclick="signup()" type="submit">Submit</button>
+      <br />
+    </div>
+    <div>
+      Signin:
+      <input type="text" placeholder="username" />
+      <input type="password" placeholder="password" />
+      <button onclick="signin()" type="submit">Submit</button>
+    </div>
+    <div>
+      User Information:
+      <div id="userInfo"></div>
+    </div>
+    <div>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </body>
+</html>
