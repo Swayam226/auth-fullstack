@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      .hidden {
+        display: none;
+      }
+    </style>
   </head>
   <script>
     async function signup() {
@@ -48,32 +53,47 @@
         },
       });
       const data = await res.json();
-      console.log("userinforunning");
-      document.getElementById("userInfo").innerHTML =
-        "username: " + data.username;
+      if (!res.ok) {
+        document.getElementById("userInfo").innerHTML = "";
+      } else {
+        console.log("userinforunning");
+        document.getElementById("userInfo").innerHTML =
+          "username: " + data.username;
+      }
     }
     getuserInfo();
+
+    async function logout() {
+      if (localStorage.getItem("token")) {
+        localStorage.removeItem("token");
+      }
+    }
   </script>
   <body>
-    <div>
-      Signup:
-      <input id="signup-username" type="text" placeholder="username" />
-      <input id="signup-password" type="password" placeholder="password" />
-      <button onclick="signup()" type="submit">Submit</button>
-      <br />
+    <div id="authsection">
+      <div>
+        Signup:
+        <input id="signup-username" type="text" placeholder="username" />
+        <input id="signup-password" type="password" placeholder="password" />
+        <button onclick="signup()" type="submit">Submit</button>
+        <br />
+      </div>
+      <div>
+        Signin:
+        <input id="signin-username" type="text" placeholder="username" />
+        <input id="signin-password" type="password" placeholder="password" />
+        <button onclick="signin()" type="submit">Submit</button>
+      </div>
     </div>
-    <div>
-      Signin:
-      <input id="signin-username" type="text" placeholder="username" />
-      <input id="signin-password" type="password" placeholder="password" />
-      <button onclick="signin()" type="submit">Submit</button>
-    </div>
-    <div>
-      User Information:
-      <div id="userInfo"></div>
-    </div>
-    <div>
-      <button onclick="logout()">Logout</button>
+
+    <div id="usersection">
+      <div>
+        User Information:
+        <div id="userInfo"></div>
+      </div>
+      <div>
+        <button onclick="logout()">Logout</button>
+      </div>
     </div>
   </body>
 </html>
